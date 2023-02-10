@@ -12,3 +12,11 @@ class User(AbstractUser):
     REQUIRED_FIELDS = ['phone_number']
 
 
+class PhoneAuthentication(models.Model):
+    phone_number = models.CharField(max_length=11)
+    confirm_code = models.CharField(max_length=6)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        db_table = 'accounts_phone_authentication'
+        unique_together = (('phone_number', 'confirm_code'),)
