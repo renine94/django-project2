@@ -1,0 +1,215 @@
+{
+	"info": {
+		"_postman_id": "edece803-2c61-431e-a251-be2b0882c816",
+		"name": "Ably2",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "회원가입 핸드폰 번호 인증 체크",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"phone_number\": \"01064139771\",\n    \"confirm_code\": \"984901\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{local}}/accounts/confirm-code/",
+					"host": [
+						"{{local}}"
+					],
+					"path": [
+						"accounts",
+						"confirm-code",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "로그인",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"phone_number\": \"01064139771\",\n    \"password\": \"1234\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{local}}/accounts/login/",
+					"host": [
+						"{{local}}"
+					],
+					"path": [
+						"accounts",
+						"login",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "단일회원조회",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjc2MDE1MDEyLCJpYXQiOjE2NzYwMTQ3MTIsImp0aSI6IjUzZGNjNTg1OTc2ZDQ3ODI5Mzc4MzVjZjRiNGNlNzNjIiwidXNlcl9pZCI6Mn0.P7EUfJgPJH6S3Dq_WX00C5qW92jRKPAU0y9SnY0Eqlo",
+						"type": "default"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"email\": \"test01@gmail.com\",\n    \"password\": \"0000\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{local}}/accounts/1",
+					"host": [
+						"{{local}}"
+					],
+					"path": [
+						"accounts",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "비밀번호 찾기 인증문자 전송요청",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjc2MDE1MDEyLCJpYXQiOjE2NzYwMTQ3MTIsImp0aSI6IjUzZGNjNTg1OTc2ZDQ3ODI5Mzc4MzVjZjRiNGNlNzNjIiwidXNlcl9pZCI6Mn0.P7EUfJgPJH6S3Dq_WX00C5qW92jRKPAU0y9SnY0Eqlo",
+						"type": "default",
+						"disabled": true
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{local}}/accounts/find-password/?phone_number=01064139771",
+					"host": [
+						"{{local}}"
+					],
+					"path": [
+						"accounts",
+						"find-password",
+						""
+					],
+					"query": [
+						{
+							"key": "phone_number",
+							"value": "01064139771"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "비밀번호 찾기 인증문자 일치체크",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjc2MDE1MDEyLCJpYXQiOjE2NzYwMTQ3MTIsImp0aSI6IjUzZGNjNTg1OTc2ZDQ3ODI5Mzc4MzVjZjRiNGNlNzNjIiwidXNlcl9pZCI6Mn0.P7EUfJgPJH6S3Dq_WX00C5qW92jRKPAU0y9SnY0Eqlo",
+						"type": "default",
+						"disabled": true
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"confirm_code\": \"820979\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{local}}/accounts/find-password/",
+					"host": [
+						"{{local}}"
+					],
+					"path": [
+						"accounts",
+						"find-password",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "비밀번호 변경(재설정)",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjc2MDE1MDEyLCJpYXQiOjE2NzYwMTQ3MTIsImp0aSI6IjUzZGNjNTg1OTc2ZDQ3ODI5Mzc4MzVjZjRiNGNlNzNjIiwidXNlcl9pZCI6Mn0.P7EUfJgPJH6S3Dq_WX00C5qW92jRKPAU0y9SnY0Eqlo",
+						"type": "default",
+						"disabled": true
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"email\": \"test01@gmail.com\",\n    \"password\": \"1234\",\n    \"password2\": \"1234\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{local}}/accounts/reset-password/",
+					"host": [
+						"{{local}}"
+					],
+					"path": [
+						"accounts",
+						"reset-password",
+						""
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
