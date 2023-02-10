@@ -33,4 +33,18 @@ class AccountSerializer(serializers.ModelSerializer):
 class MyTokenObtainPairSerializer(serializers.Serializer):
     email = serializers.CharField(required=False)
     phone_number = serializers.CharField(required=False)
-    password = serializers.CharField(write_only=True)
+    password = serializers.CharField(style={'input_type': 'password'}, write_only=True)
+
+
+class PasswordCheckSerializer(serializers.Serializer):
+    email = serializers.CharField()
+    password = serializers.CharField(style={'input_type': 'password'})
+    password2 = serializers.CharField(style={'input_type': 'password'})
+
+    def validate(self, data):
+        p1 = data.get('password')
+        p2 = data.get('password2')
+        if p1 != p2:
+            raise serializers.ValidationError('both password should be same!')
+        return data
+

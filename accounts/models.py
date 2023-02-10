@@ -8,7 +8,7 @@ class User(AbstractUser):
     username = models.CharField('이름', max_length=30, validators=[UnicodeUsernameValidator()])
     nickname = models.CharField('닉네임', max_length=30)
     phone_number = models.CharField('핸드폰번호', max_length=11, unique=True)
-    confirm_code = models.CharField('임시코드', max_length=6)
+    confirm_code = models.CharField('임시코드', max_length=6, unique=True, null=True)
 
     USERNAME_FIELD = "email"
     REQUIRED_FIELDS = ['phone_number']
