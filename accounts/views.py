@@ -7,12 +7,6 @@ from accounts.serializers import AccountSerializer
 
 
 # Create your views here.
-
-
-def index(request):
-    return JsonResponse('Test', safe=False)
-
-
 class AccountAPI(ModelViewSet):
     queryset = User.objects.all()
     serializer_class = AccountSerializer
