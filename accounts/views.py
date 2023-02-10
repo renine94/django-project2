@@ -1,13 +1,17 @@
 import random
 
+from django.contrib.auth import authenticate
 from rest_framework import mixins, viewsets, status
 from rest_framework.decorators import action
 from rest_framework.generics import get_object_or_404
 from rest_framework.permissions import AllowAny
 from rest_framework.response import Response
+from rest_framework_simplejwt.tokens import RefreshToken
+
+from rest_framework_simplejwt.views import TokenObtainPairView
 
 from accounts.models import User, PhoneAuthentication
-from accounts.serializers import AccountSerializer
+from accounts.serializers import AccountSerializer, MyTokenObtainPairSerializer
 
 
 # Create your views here.
@@ -32,7 +36,7 @@ class AccountAPI(mixins.CreateModelMixin,
             confirm_code=confirm_cde
         )
 
-        return Response({'message': f'인증번호 [] 발송되었습니다.'}, status=status.HTTP_200_OK)
+        return Response({'message': f'인증번호 [{confirm_cde}] 발송되었습니다.'}, status=status.HTTP_200_OK)
 
     @confirm_code.mapping.post
     def confirm_code_check(self, request):
@@ -43,5 +47,25 @@ class AccountAPI(mixins.CreateModelMixin,
         return Response({'meesage': True}, status=status.HTTP_200_OK)
 
 
-class LoginAPI():
-    pass
+class MyTokenObtainPairView(TokenObtainPairView):
+    serializer_class = MyTokenObtainPairSerializer
+
+    def post(self, request):
+        serializer = self.get_serializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        data = serializer.validated_data  # Fetch the data form serializer
+
+        user = authenticate(**data)
+        if not user:
+            raise ValueError('user is not exists!')
+
+        # Generate Token
+        refresh = RefreshToken.for_user(user)
+
+        return Response(
+            {
+                'access': str(refresh.access_token),
+                'refresh': str(refresh)
+            },
+            status=status.HTTP_200_OK
+        )
