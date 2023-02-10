@@ -1,5 +1,8 @@
 from django.http import JsonResponse
+from rest_framework import mixins, viewsets, status
+from rest_framework.decorators import action
 from rest_framework.permissions import AllowAny
+from rest_framework.response import Response
 from rest_framework.viewsets import ModelViewSet
 
 from accounts.models import User
@@ -7,7 +10,9 @@ from accounts.serializers import AccountSerializer
 
 
 # Create your views here.
-class AccountAPI(ModelViewSet):
+class AccountAPI(mixins.CreateModelMixin,
+                 mixins.RetrieveModelMixin,
+                 viewsets.GenericViewSet):
     queryset = User.objects.all()
     serializer_class = AccountSerializer
     permission_classes = [AllowAny]
@@ -15,20 +20,9 @@ class AccountAPI(ModelViewSet):
     def retrieve(self, request, *args, **kwargs):
         return super().retrieve(request, *args, **kwargs)
 
-    def create(self, request, *args, **kwargs):
-        return super().create(request, *args, **kwargs)
+    @action(detail=False, methods=['get'])
+    def send_confirm_code(self, request):
+        """전화번호 인증 문자 발송"""
+        user = self.get_object()
 
-    # @action(detail=True, methods=['post'])
-    # def set_password(self, request, pk=None):
-    #     user = self.get_object()
-    #     serializer = PasswordSerializer(data=request.data)
-    #     if serializer.is_valid():
-    #         user.set_password(serializer.validated_data['password'])
-    #         user.save()
-    #         return Response({'status': 'password set'})
-    #     else:
-    #         return Response(serializer.errors,
-    #                         status=status.HTTP_400_BAD_REQUEST)
-
-
-
+        return Response({'message': f'인증번호 [] 발송되었습니다.'}, status=status.HTTP_200_OK)
